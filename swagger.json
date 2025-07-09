@@ -1,1098 +1,896 @@
 {
-  "openapi": "3.0.4",
-  "info": {
-    "title": "MathHub API- Swagger Doc",
-    "description": "This is a test page of MathHub API doc",
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "https://mathhub-test.swagger.io/api/v1"
-    }
-  ],
-  "tags": [
-    {
-      "name": "test",
-      "description": "Everything about test api"
-    },
-    {
-      "name": "user",
-      "description": "auth of user"
-    }
-  ],
-  "paths": {
-    "/test": {
-      "put": {
-        "tags": [
-          "test"
-        ],
-        "summary": "Update an existing test.",
-        "description": "Update an existing test by Id.",
-        "operationId": "updatePet",
-        "requestBody": {
-          "description": "Update an existent test in the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Pet"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/Pet"
-              }
-            },
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/Pet"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Pet not found"
-          },
-          "422": {
-            "description": "Validation exception"
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "test"
-        ],
-        "summary": "Add a new pet to the store.",
-        "description": "Add a new pet to the store.",
-        "operationId": "addPet",
-        "requestBody": {
-          "description": "Create a new pet in the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Pet"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/Pet"
-              }
-            },
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/Pet"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid input"
-          },
-          "422": {
-            "description": "Validation exception"
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      }
-    },
-    "/pet/findByStatus": {
-      "get": {
-        "tags": [
-          "test"
-        ],
-        "summary": "Finds Pets by status.",
-        "description": "Multiple status values can be provided with comma separated strings.",
-        "operationId": "findPetsByStatus",
-        "parameters": [
-          {
-            "name": "status",
-            "in": "query",
-            "description": "Status values that need to be considered for filter",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "default": "available",
-              "enum": [
-                "available",
-                "pending",
-                "sold"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Pet"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Pet"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid status value"
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      }
-    },
-    "/pet/findByTags": {
-      "get": {
-        "tags": [
-          "test"
-        ],
-        "summary": "Finds Pets by tags.",
-        "description": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
-        "operationId": "findPetsByTags",
-        "parameters": [
-          {
-            "name": "tags",
-            "in": "query",
-            "description": "Tags to filter by",
-            "required": false,
-            "explode": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Pet"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Pet"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid tag value"
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      }
-    },
-    "/pet/{petId}": {
-      "get": {
-        "tags": [
-          "test"
-        ],
-        "summary": "Find pet by ID.",
-        "description": "Returns a single pet.",
-        "operationId": "getPetById",
-        "parameters": [
-          {
-            "name": "petId",
-            "in": "path",
-            "description": "ID of pet to return",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Pet not found"
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "api_key": [
-
-            ]
-          },
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "test"
-        ],
-        "summary": "Updates a pet in the store with form data.",
-        "description": "Updates a pet resource based on the form data.",
-        "operationId": "updatePetWithForm",
-        "parameters": [
-          {
-            "name": "petId",
-            "in": "path",
-            "description": "ID of pet that needs to be updated",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "description": "Name of pet that needs to be updated",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "description": "Status of pet that needs to be updated",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid input"
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "test"
-        ],
-        "summary": "Deletes a pet.",
-        "description": "Delete a pet.",
-        "operationId": "deletePet",
-        "parameters": [
-          {
-            "name": "api_key",
-            "in": "header",
-            "description": "",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "petId",
-            "in": "path",
-            "description": "Pet id to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Pet deleted"
-          },
-          "400": {
-            "description": "Invalid pet value"
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      }
-    },
-    "/pet/{petId}/uploadImage": {
-      "post": {
-        "tags": [
-          "test"
-        ],
-        "summary": "Uploads an image.",
-        "description": "Upload image of the pet.",
-        "operationId": "uploadFile",
-        "parameters": [
-          {
-            "name": "petId",
-            "in": "path",
-            "description": "ID of pet to update",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "additionalMetadata",
-            "in": "query",
-            "description": "Additional Metadata",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/octet-stream": {
-              "schema": {
-                "type": "string",
-                "format": "binary"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "No file uploaded"
-          },
-          "404": {
-            "description": "Pet not found"
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      }
-    },
-    "/user/login": {
-      "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Logs user into the system.",
-        "description": "Log into the system.",
-        "operationId": "loginUser",
-        "parameters": [
-          {
-            "name": "username",
-            "in": "query",
-            "description": "The user name for login",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "description": "The password for login in clear text",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "headers": {
-              "X-Rate-Limit": {
-                "description": "calls per hour allowed by the user",
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "X-Expires-After": {
-                "description": "date in UTC when token expires",
-                "schema": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              }
-            },
-            "content": {
-              "application/xml": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid username/password supplied"
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/user/logout": {
-      "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Logs out current logged in user session.",
-        "description": "Log user out of the system.",
-        "operationId": "logoutUser",
-        "parameters": [
-
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation"
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/user/{username}": {
-      "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Get user by user name.",
-        "description": "Get user detail based on username.",
-        "operationId": "getUserByName",
-        "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "description": "The name that needs to be fetched. Use user1 for testing",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid username supplied"
-          },
-          "404": {
-            "description": "User not found"
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Update user resource.",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "updateUser",
-        "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "description": "name that need to be deleted",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Update an existent user in the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "successful operation"
-          },
-          "400": {
-            "description": "bad request"
-          },
-          "404": {
-            "description": "user not found"
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Delete user resource.",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "deleteUser",
-        "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "description": "The name that needs to be deleted",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User deleted"
-          },
-          "400": {
-            "description": "Invalid username supplied"
-          },
-          "404": {
-            "description": "User not found"
-          },
-          "default": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Order": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 10
-          },
-          "petId": {
-            "type": "integer",
-            "format": "int64",
-            "example": 198772
-          },
-          "quantity": {
-            "type": "integer",
-            "format": "int32",
-            "example": 7
-          },
-          "shipDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "status": {
-            "type": "string",
-            "description": "Order Status",
-            "example": "approved",
-            "enum": [
-              "placed",
-              "approved",
-              "delivered"
-            ]
-          },
-          "complete": {
-            "type": "boolean"
-          }
-        },
-        "xml": {
-          "name": "order"
-        }
-      },
-      "Category": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 1
-          },
-          "name": {
-            "type": "string",
-            "example": "Dogs"
-          }
-        },
-        "xml": {
-          "name": "category"
-        }
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 10
-          },
-          "username": {
-            "type": "string",
-            "example": "theUser"
-          },
-          "firstName": {
-            "type": "string",
-            "example": "John"
-          },
-          "lastName": {
-            "type": "string",
-            "example": "James"
-          },
-          "email": {
-            "type": "string",
-            "example": "john@email.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "12345"
-          },
-          "phone": {
-            "type": "string",
-            "example": "12345"
-          },
-          "userStatus": {
-            "type": "integer",
-            "description": "User Status",
-            "format": "int32",
-            "example": 1
-          }
-        },
-        "xml": {
-          "name": "user"
-        }
-      },
-      "Tag": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "name": {
-            "type": "string"
-          }
-        },
-        "xml": {
-          "name": "tag"
-        }
-      },
-      "Pet": {
-        "required": [
-          "name",
-          "photoUrls"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "example": 10
-          },
-          "name": {
-            "type": "string",
-            "example": "doggie"
-          },
-          "category": {
-            "$ref": "#/components/schemas/Category"
-          },
-          "photoUrls": {
-            "type": "array",
-            "xml": {
-              "wrapped": true
-            },
-            "items": {
-              "type": "string",
-              "xml": {
-                "name": "photoUrl"
-              }
-            }
-          },
-          "tags": {
-            "type": "array",
-            "xml": {
-              "wrapped": true
-            },
-            "items": {
-              "$ref": "#/components/schemas/Tag"
-            }
-          },
-          "status": {
-            "type": "string",
-            "description": "pet status in the store",
-            "enum": [
-              "available",
-              "pending",
-              "sold"
-            ]
-          }
-        },
-        "xml": {
-          "name": "pet"
-        }
-      },
-      "ApiResponse": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "type": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          }
-        },
-        "xml": {
-          "name": "##default"
-        }
-      },
-      "Error": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "code",
-          "message"
-        ]
-      }
-    },
-    "requestBodies": {
-      "Pet": {
-        "description": "Pet object that needs to be added to the store",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Pet"
-            }
-          },
-          "application/xml": {
-            "schema": {
-              "$ref": "#/components/schemas/Pet"
-            }
-          }
-        }
-      },
-      "UserArray": {
-        "description": "List of user object",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
-          }
-        }
-      }
-    },
-    "securitySchemes": {
-      "petstore_auth": {
-        "type": "oauth2",
-        "flows": {
-          "implicit": {
-            "authorizationUrl": "https://petstore3.swagger.io/oauth/authorize",
-            "scopes": {
-              "write:pets": "modify pets in your account",
-              "read:pets": "read your pets"
-            }
-          }
-        }
-      },
-      "api_key": {
-        "type": "apiKey",
-        "name": "api_key",
-        "in": "header"
-      }
-    }
-  }
+	"openapi": "3.0.0",
+	"info": {
+		"title": "MathHub API",
+		"description": "MathHub 後端 API 規格文件",
+		"version": "1.0.0 20250710",
+		"contact": {
+			"name": "MathHub"
+		}
+	},
+	"servers": [
+		{
+			"url": "http://localhost:5000/api",
+			"description": "開發環境"
+		}
+	],
+	"components": {
+		"parameters": {
+			"ContentTypeHeader": {
+				"name": "Content-Type",
+				"in": "header",
+				"required": true,
+				"schema": {
+					"type": "string",
+					"default": "application/json"
+				},
+				"description": "請求內容類型"
+			},
+			"AuthorizationHeader": {
+				"name": "Authorization",
+				"in": "header",
+				"required": true,
+				"schema": {
+					"type": "string",
+					"default": "bearer ${access token}"
+				},
+				"description": "access_token 由 IdToken 而來"
+			},
+			"LimitParam": {
+				"name": "limit",
+				"in": "query",
+				"required": false,
+				"schema": {
+					"type": "integer",
+					"default": 10
+				},
+				"description": "欲查詢每頁分頁時的數量, 0 代表查詢 DB 裡所有符合 filter 條件的資料"
+			},
+			"SkipParam": {
+				"name": "skip",
+				"in": "query",
+				"required": false,
+				"schema": {
+					"type": "integer",
+					"default": 0
+				},
+				"description": "跳過前 N 個數量, 0 代表從第一筆開始查詢, 邏輯是依靠 limit * (page - 1) 處理分頁資料流"
+			},
+			"FilterParam": {
+				"name": "filter",
+				"in": "query",
+				"required": false,
+				"schema": {
+					"type": "string",
+					"default": "{ 'title': 'test', 'createdAt': { 'gt': 1750430295000 } }"
+				},
+				"description": "過濾搜尋資料條件, 由 { key: value } 組成, 可以多個過濾條件, 確認是否可以用 MongoDB 語法?"
+			},
+			"SortParam": {
+				"name": "sort",
+				"in": "query",
+				"required": false,
+				"schema": {
+					"type": "string",
+					"default": "{ 'createdAt': -1 }"
+				},
+				"description": "排序資料, 由 { key: value } 組成, value 為 -1 代表 由大到小排序, 1 由小到大排序"
+			},
+			"ProjectionParam": {
+				"name": "projection",
+				"in": "query",
+				"required": false,
+				"schema": {
+					"type": "string",
+					"default": "{ 'title': 1, 'createdAt': 1 }"
+				},
+				"description": "資料投影處理, 由 { key: value } 組成, value 為 1 代表查詢, 0 代表不查詢, 不能混合 1 和 0 的設定"
+			}
+		},
+		"schemas": {
+			"User": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"example": "user123"
+					},
+					"name": {
+						"type": "string",
+						"example": "張三"
+					},
+					"email": {
+						"type": "string",
+						"format": "email",
+						"example": "user@example.com"
+					},
+					"emailVerified": {
+						"type": "boolean",
+						"example": true,
+						"description": "第一次註冊後是否已驗證過 email, 如果沒有驗證過 email 則禁止登入"
+					},
+					"permissionList": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"example": ["get:question", "put:question", "patch:question", "delete:question"],
+						"description": "先做用戶針對後台權限功能, [action]:[page] 組成, 例如 get:question 代表可以看到問題頁面, put:question 代表可以新增問題"
+					},
+					"birthday": {
+						"type": "integer",
+						"format": "timestamp",
+						"example": 1750430295000
+					},
+					"grade": {
+						"type": "string",
+						"example": "國小一年級",
+						"description": "用戶年級, 這邊需再定義資料欄位"
+					},
+					"isActive": {
+						"type": "boolean",
+						"example": true,
+						"description": "用戶是否被停用, 如果被停用則禁止登入"
+					},
+					"createdAt": {
+						"type": "integer",
+						"format": "timestamp",
+						"example": 1750430295000
+					},
+					"updatedAt": {
+						"type": "integer",
+						"format": "timestamp",
+						"example": 1750430295000
+					}
+				}
+			},
+			"Creator": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"example": "user123"
+					},
+					"name": {
+						"type": "string",
+						"example": "張三"
+					},
+					"email": {
+						"type": "string",
+						"format": "email",
+						"example": "user@example.com"
+					}
+				}
+			},
+			"NoticeBoard": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"example": "notice123"
+					},
+					"title": {
+						"type": "string",
+						"example": "公告標題"
+					},
+					"content": {
+						"type": "string",
+						"example": "公告內容"
+					},
+					"status": {
+						"type": "string",
+						"enum": ["public", "draft"],
+						"description": "公告狀態, public 代表已發佈, draft 代表草稿"
+					},
+					"pinOrder": {
+						"type": "integer",
+						"example": 0,
+						"description": "置頂排序, 0 代表不置頂, 數字越大可以代表權重越高越上面, 如果是非置頂的公告, 需要依照 sort 所指定欄位排序"
+					},
+					"creator": {
+						"$ref": "#/components/schemas/Creator"
+					},
+					"scheduleAt": {
+						"type": "integer",
+						"format": "timestamp",
+						"example": 1750430295000,
+						"description": "預約發佈時間, 0 代表直接發佈"
+					},
+					"createdAt": {
+						"type": "integer",
+						"format": "timestamp",
+						"example": 1750430295000
+					},
+					"updatedAt": {
+						"type": "integer",
+						"format": "timestamp",
+						"example": 1750430295000
+					}
+				}
+			},
+			"NoticeBoardRequest": {
+				"type": "object",
+				"required": ["title", "status"],
+				"properties": {
+					"title": {
+						"type": "string",
+						"example": "公告標題"
+					},
+					"content": {
+						"type": "string",
+						"example": "公告內容"
+					},
+					"status": {
+						"type": "string",
+						"enum": ["public", "draft"],
+						"description": "公告狀態, public 代表已發佈, draft 代表草稿"
+					},
+					"pinOrder": {
+						"type": "integer",
+						"example": 0,
+						"description": "置頂排序, 0 代表不置頂, 數字越大可以代表權重越高越上面, 如果是非置頂的公告, 需要依照 sort 所指定欄位排序"
+					},
+					"scheduleAt": {
+						"type": "integer",
+						"format": "timestamp",
+						"example": 1750430295000,
+						"description": "預約發佈時間, 0 代表直接發佈"
+					}
+				}
+			},
+			"LoginRequest": {
+				"type": "object",
+				"required": ["email", "password"],
+				"properties": {
+					"email": {
+						"type": "string",
+						"format": "email",
+						"example": "user@example.com"
+					},
+					"password": {
+						"type": "string",
+						"example": "password123"
+					}
+				}
+			},
+			"LoginResponse": {
+				"type": "object",
+				"properties": {
+					"success": {
+						"type": "boolean",
+						"example": true
+					},
+					"data": {
+						"type": "object",
+						"properties": {
+							"accessToken": {
+								"type": "string",
+								"example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+							},
+							"idToken": {
+								"type": "string",
+								"example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+							},
+							"refreshToken": {
+								"type": "string",
+								"example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+							},
+							"expiresIn": {
+								"type": "integer",
+								"example": 3600
+							},
+							"user": {
+								"$ref": "#/components/schemas/User"
+							}
+						}
+					}
+				}
+			},
+			"SuccessResponse": {
+				"type": "object",
+				"properties": {
+					"message": {
+						"type": "string",
+						"example": "操作成功"
+					},
+					"success": {
+						"type": "boolean",
+						"example": true
+					},
+					"data": {
+						"type": "object",
+						"properties": {}
+					}
+				}
+			},
+			"400ErrorResponse": {
+				"type": "object",
+				"properties": {
+					"message": {
+						"type": "string",
+						"example": "invalid params"
+					},
+					"status": {
+						"type": "string",
+						"example": "failed"
+					},
+					"data": {
+						"type": "object",
+						"properties": {}
+					}
+				}
+			},
+			"401ErrorResponse": {
+				"type": "object",
+				"properties": {
+					"message": {
+						"type": "string",
+						"example": "unauthorized"
+					},
+					"status": {
+						"type": "string",
+						"example": "failed"
+					},
+					"data": {
+						"type": "object",
+						"properties": {}
+					}
+				}
+			},
+			"5XXErrorResponse": {
+				"type": "object",
+				"properties": {
+					"message": {
+						"type": "string",
+						"example": "server error"
+					},
+					"status": {
+						"type": "string",
+						"example": "failed"
+					},
+					"data": {
+						"type": "object",
+						"properties": {}
+					}
+				}
+			}
+		}
+	},
+	"paths": {
+		"/auth/login": {
+			"post": {
+				"tags": ["認證"],
+				"summary": "用戶登入",
+				"description": "使用電子郵件和密碼進行用戶登入",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LoginRequest"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "登入成功",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LoginResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "請求格式錯誤",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/400ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "電子郵件或密碼錯誤",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/401ErrorResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "伺服器錯誤",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/5XXErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/logout": {
+			"post": {
+				"tags": ["認證"],
+				"summary": "用戶登出",
+				"description": "登出當前用戶",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/ContentTypeHeader"
+					},
+					{
+						"$ref": "#/components/parameters/AuthorizationHeader"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "登出成功",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SuccessResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "未授權",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/401ErrorResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "伺服器錯誤",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/5XXErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/refresh": {
+			"post": {
+				"tags": ["認證"],
+				"summary": "替換更新 access token",
+				"description": "使用 refresh token 重新替換更新 access token",
+				"responses": {
+					"200": {
+						"description": "access token 更新成功",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"success": {
+											"type": "boolean",
+											"example": true
+										},
+										"data": {
+											"type": "object",
+											"properties": {
+												"accessToken": {
+													"type": "string",
+													"example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+												},
+												"idToken": {
+													"type": "string",
+													"example": "4j17uio393i..."
+												},
+												"expiresIn": {
+													"type": "integer",
+													"example": 3600
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Refresh token 無效或過期",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/401ErrorResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "伺服器錯誤",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/5XXErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/me": {
+			"get": {
+				"tags": ["認證"],
+				"summary": "獲取當前用戶資訊",
+				"description": "獲取當前登入用戶的詳細資訊",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/ContentTypeHeader"
+					},
+					{
+						"$ref": "#/components/parameters/AuthorizationHeader"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "成功獲取用戶資訊",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"success": {
+											"type": "boolean",
+											"example": true
+										},
+										"data": {
+											"$ref": "#/components/schemas/User"
+										}
+									}
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "未授權",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/401ErrorResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "伺服器錯誤",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/5XXErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/admin/noticeBoards": {
+			"get": {
+				"tags": ["公告"],
+				"summary": "獲取公告列表",
+				"description": "獲取當前分頁所有公告列表",
+				"parameters": [
+					{ "$ref": "#/components/parameters/ContentTypeHeader" },
+					{ "$ref": "#/components/parameters/AuthorizationHeader" },
+					{ "$ref": "#/components/parameters/LimitParam" },
+					{ "$ref": "#/components/parameters/SkipParam" },
+					{ "$ref": "#/components/parameters/FilterParam" },
+					{ "$ref": "#/components/parameters/SortParam" },
+					{ "$ref": "#/components/parameters/ProjectionParam" }
+				],
+				"responses": {
+					"200": {
+						"description": "成功獲取公告列表",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"message": {
+											"type": "string",
+											"example": "成功獲取公告列表"
+										},
+										"data": {
+											"type": "array",
+											"items": {
+												"$ref": "#/components/schemas/NoticeBoard"
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "請求格式錯誤",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/400ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "未授權",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/401ErrorResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "伺服器錯誤",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/5XXErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/admin/noticeBoards/{id}": {
+			"get": {
+				"tags": ["公告"],
+				"summary": "獲取指定 id 單一公告",
+				"description": "獲取指定 id 單一公告",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{ "$ref": "#/components/parameters/ContentTypeHeader" },
+					{ "$ref": "#/components/parameters/AuthorizationHeader" }
+				],
+				"responses": {
+					"200": {
+						"description": "成功獲取指定 id 單一公告",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"message": {
+											"type": "string",
+											"example": "成功獲取指定 id 單一公告"
+										},
+										"data": {
+											"$ref": "#/components/schemas/NoticeBoard"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "請求格式錯誤",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/400ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "未授權",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/401ErrorResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "伺服器錯誤",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/5XXErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"tags": ["公告"],
+				"summary": "更新指定 id 單一公告",
+				"description": "更新指定 id 單一公告",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{ "$ref": "#/components/parameters/ContentTypeHeader" },
+					{ "$ref": "#/components/parameters/AuthorizationHeader" }
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"oneOf": [
+									{
+										"$ref": "#/components/schemas/NoticeBoardRequest"
+									},
+									{
+										"type": "object",
+										"properties": {
+											"status": {
+												"type": "string",
+												"enum": ["public", "draft"],
+												"example": "public"
+											}
+										}
+									}
+								]
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "成功更新指定 id 單一公告",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"message": {
+											"type": "string",
+											"example": "成功更新指定 id 單一公告"
+										},
+										"data": {
+											"$ref": "#/components/schemas/NoticeBoard"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "請求格式錯誤",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/400ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "未授權",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/401ErrorResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "伺服器錯誤",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/5XXErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["公告"],
+				"summary": "刪除指定 id 單一公告",
+				"description": "刪除指定 id 單一公告",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{ "$ref": "#/components/parameters/ContentTypeHeader" },
+					{ "$ref": "#/components/parameters/AuthorizationHeader" }
+				],
+				"responses": {
+					"200": {
+						"description": "成功刪除指定 id 單一公告",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"message": {
+											"type": "string",
+											"example": "成功刪除指定 id 單一公告"
+										},
+										"data": {
+											"type": "object",
+											"properties": {}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "請求格式錯誤",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/400ErrorResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "未授權",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/401ErrorResponse"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "伺服器錯誤",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/5XXErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"tags": [
+		{
+			"name": "認證",
+			"description": "用戶認證相關 API"
+		},
+		{
+			"name": "公告",
+			"description": "公告相關 API"
+		}
+	]
 }
