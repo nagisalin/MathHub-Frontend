@@ -1,0 +1,154 @@
+# 通用參數
+parameters:
+  ContentTypeHeader:
+    name: Content-Type
+    in: header
+    required: true
+    schema:
+      type: string
+      default: application/json
+    description: '請求內容類型'
+
+  AuthorizationHeader:
+    name: Authorization
+    in: header
+    required: true
+    schema:
+      type: string
+      default: bearer ${access token}
+    description: 'access_token 由 IdToken 而來'
+
+  LimitParam:
+    name: limit
+    in: query
+    required: false
+    schema:
+      type: integer
+      default: 10
+    description: '欲查詢每頁分頁時的數量, 0 代表查詢 DB 裡所有符合 filter 條件的資料'
+
+  SkipParam:
+    name: skip
+    in: query
+    required: false
+    schema:
+      type: integer
+      default: 0
+    description: '跳過前 N 個數量, 0 代表從第一筆開始查詢, 邏輯是依靠 limit * (page - 1) 處理分頁資料流'
+
+  FilterParam:
+    name: filter
+    in: query
+    required: false
+    schema:
+      type: string
+      default: '{ title: test, createdAt: { gt: 1750430295000 } }'
+    description: '過濾搜尋資料條件, 由 { key: value } 組成, 可以多個過濾條件, 確認是否可以用 MongoDB 語法?'
+
+  SortParam:
+    name: sort
+    in: query
+    required: false
+    schema:
+      type: string
+      default: "{ 'createdAt': -1 }"
+    description: '排序資料, 由 { key: value } 組成, value 為 -1 代表 由大到小排序, 1 由小到大排序'
+
+  ProjectionParam:
+    name: projection
+    in: query
+    required: false
+    schema:
+      type: string
+      default: "{ 'title': 1, 'createdAt': 1 }"
+    description: '資料投影處理, 由 { key: value } 組成, value 為 1 代表查詢, 0 代表不查詢, 不能混合 1 和 0 的設定'
+
+# 通用響應
+responses:
+  SuccessResponse:
+    type: object
+    properties:
+      message:
+        type: string
+      success:
+        type: boolean
+        example: true
+        description: '顯示成功或失敗, 用來作流程判斷'
+        enum:
+          - true
+          - false
+      data:
+        type: object
+        properties: {}
+      totalNum:
+        type: integer
+        example: 100
+        description: 'db 總數量, 用於顯示總筆數及分頁頁碼用'
+
+  '400ErrorResponse':
+    type: object
+    properties:
+      message:
+        type: string
+        example: 'invalid params'
+      success:
+        type: boolean
+        example: false
+        description: '顯示成功或失敗, 用來作流程判斷'
+        enum:
+          - true
+          - false
+      data:
+        type: object
+        properties: {}
+
+  '401ErrorResponse':
+    type: object
+    properties:
+      message:
+        type: string
+        example: 'unauthorized'
+      success:
+        type: boolean
+        example: false
+        description: '顯示成功或失敗, 用來作流程判斷'
+        enum:
+          - true
+          - false
+      data:
+        type: object
+        properties: {}
+
+  '403ErrorResponse':
+    type: object
+    properties:
+      message:
+        type: string
+        example: 'forbidden'
+      success:
+        type: boolean
+        example: false
+        description: '顯示成功或失敗, 用來作流程判斷'
+        enum:
+          - true
+          - false
+      data:
+        type: object
+        properties: {}
+
+  '500ErrorResponse':
+    type: object
+    properties:
+      message:
+        type: string
+        example: 'server error'
+      success:
+        type: boolean
+        example: false
+        description: '顯示成功或失敗, 用來作流程判斷'
+        enum:
+          - true
+          - false
+      data:
+        type: object
+        properties: {}

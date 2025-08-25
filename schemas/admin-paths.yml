@@ -1,0 +1,252 @@
+# 管理員相關 API 路徑
+
+noticeBoards:
+  get:
+    tags: [公告]
+    summary: '獲取公告列表'
+    description: '獲取當前分頁所有公告列表'
+    parameters:
+      - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
+      - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
+      - $ref: '../swagger.yml#/components/parameters/LimitParam'
+      - $ref: '../swagger.yml#/components/parameters/SkipParam'
+      - $ref: '../swagger.yml#/components/parameters/FilterParam'
+      - $ref: '../swagger.yml#/components/parameters/SortParam'
+      - $ref: '../swagger.yml#/components/parameters/ProjectionParam'
+    responses:
+      '200':
+        description: '成功獲取公告列表'
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../swagger.yml#/components/schemas/SuccessResponse'
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: '成功獲取公告列表'
+                    data:
+                      type: array
+                      items:
+                        $ref: '../swagger.yml#/components/schemas/NoticeBoard'
+      '400':
+        description: '請求格式錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/400ErrorResponse'
+      '401':
+        description: '未授權'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '500':
+        description: '伺服器錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
+
+  post:
+    tags: [公告]
+    summary: '新增單一公告'
+    description: '新增單一公告'
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
+      - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../swagger.yml#/components/schemas/NoticeBoardRequest'
+    responses:
+      '200':
+        description: '成功新增一則公告'
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../swagger.yml#/components/schemas/SuccessResponse'
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: '成功新增一則公告'
+                    data:
+                      $ref: '../swagger.yml#/components/schemas/NoticeBoard'
+      '400':
+        description: '請求格式錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/400ErrorResponse'
+      '401':
+        description: '未授權'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '500':
+        description: '伺服器錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
+
+noticeBoardsById:
+  get:
+    tags: [公告]
+    summary: '獲取指定 id 單一公告'
+    description: '獲取指定 id 單一公告'
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
+      - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
+    responses:
+      '200':
+        description: '成功獲取指定 id 單一公告'
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../swagger.yml#/components/schemas/SuccessResponse'
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: '成功獲取指定 id 單一公告'
+                    data:
+                      $ref: '../swagger.yml#/components/schemas/NoticeBoard'
+      '400':
+        description: '請求格式錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/400ErrorResponse'
+      '401':
+        description: '未授權'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '500':
+        description: '伺服器錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
+
+  patch:
+    tags: [公告]
+    summary: '更新指定 id 單一公告'
+    description: '更新指定 id 單一公告'
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
+      - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../swagger.yml#/components/schemas/NoticeBoardRequest'
+              - type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [public, draft]
+                    example: 'public'
+    responses:
+      '200':
+        description: '成功更新指定 id 單一公告'
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../swagger.yml#/components/schemas/SuccessResponse'
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: '成功更新指定 id 單一公告'
+                    data:
+                      $ref: '../swagger.yml#/components/schemas/NoticeBoard'
+      '400':
+        description: '請求格式錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/400ErrorResponse'
+      '401':
+        description: '未授權'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '500':
+        description: '伺服器錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
+
+  delete:
+    tags: [公告]
+    summary: '刪除指定 id 單一公告'
+    description: '刪除指定 id 單一公告'
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
+      - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
+    responses:
+      '200':
+        description: '成功刪除指定 id 單一公告'
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../swagger.yml#/components/schemas/SuccessResponse'
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: '成功刪除指定 id 單一公告'
+      '400':
+        description: '請求格式錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/400ErrorResponse'
+      '401':
+        description: '未授權'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '500':
+        description: '伺服器錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/500ErrorResponse'

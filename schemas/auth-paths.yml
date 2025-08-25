@@ -1,0 +1,147 @@
+# 認證相關 API 路徑
+
+login:
+  post:
+    tags: [認證]
+    summary: "用戶登入"
+    description: "使用電子郵件和密碼進行用戶登入"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../swagger.yml#/components/schemas/LoginRequest'
+    responses:
+      '200':
+        description: "登入成功"
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/LoginResponse'
+      '400':
+        description: "請求格式錯誤"
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/400ErrorResponse'
+      '401':
+        description: "無法找到用戶資料"
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '403':
+        description: "密碼錯誤，無法通過身分驗證"
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/403ErrorResponse'
+      '500':
+        description: "伺服器錯誤"
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
+
+logout:
+  post:
+    tags: [認證]
+    summary: "用戶登出"
+    description: "登出當前用戶"
+    parameters:
+      - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
+      - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
+    responses:
+      '200':
+        description: "登出成功"
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/SuccessResponse'
+      '401':
+        description: "未授權"
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '500':
+        description: "伺服器錯誤"
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
+
+refresh:
+  post:
+    tags: [認證]
+    summary: "替換更新 access token"
+    description: "使用 refresh token 重新替換更新 access token"
+    responses:
+      '200':
+        description: "access token 更新成功"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                data:
+                  type: object
+                  properties:
+                    accessToken:
+                      type: string
+                      example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    idToken:
+                      type: string
+                      example: "4j17uio393i..."
+                    expiresIn:
+                      type: integer
+                      example: 3600
+      '401':
+        description: "Refresh token 無效或過期"
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '500':
+        description: "伺服器錯誤"
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
+
+me:
+  get:
+    tags: [認證]
+    summary: "獲取當前用戶資訊"
+    description: "獲取當前登入用戶的詳細資訊"
+    parameters:
+      - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
+      - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
+    responses:
+      '200':
+        description: "成功獲取用戶資訊"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                data:
+                  $ref: '../swagger.yml#/components/schemas/User'
+      '401':
+        description: "未授權"
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '500':
+        description: "伺服器錯誤"
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/500ErrorResponse'

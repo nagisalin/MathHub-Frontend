@@ -1,0 +1,40 @@
+# 認證相關 Schema
+LoginRequest:
+  type: object
+  required: [email, password, deviceID]
+  properties:
+    email:
+      type: string
+      format: email
+      example: "user@example.com"
+    password:
+      type: string
+      example: "password123"
+    deviceID:
+      type: string
+      example: "4fcd0ed2-0000-0000-0000-283b3841e6ea"
+    nonce:
+      type: string
+      example: "1234567890"
+      nullable: true
+
+LoginResponse:
+  type: object
+  properties:
+    success:
+      type: boolean
+      example: true
+    data:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        idToken:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        expiresIn:
+          type: integer
+          example: 3600
+        user:
+          $ref: '../swagger.yml#/components/schemas/User'

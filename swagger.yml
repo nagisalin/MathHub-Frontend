@@ -1,0 +1,86 @@
+openapi: 3.0.0
+info:
+  title: 'MathHub API'
+  description: 'MathHub 後端 API 規格文件'
+  version: '1.0.1  20250825'
+  contact:
+    name: 'MathHub'
+
+servers:
+  - url: 'https://mathhubbackend.zeabur.app'
+    description: 'MathHub 後端環境'
+
+# 引入通用參數和響應
+components:
+  parameters:
+    ContentTypeHeader:
+      $ref: './schemas/common.yml#/parameters/ContentTypeHeader'
+    AuthorizationHeader:
+      $ref: './schemas/common.yml#/parameters/AuthorizationHeader'
+    LimitParam:
+      $ref: './schemas/common.yml#/parameters/LimitParam'
+    SkipParam:
+      $ref: './schemas/common.yml#/parameters/SkipParam'
+    FilterParam:
+      $ref: './schemas/common.yml#/parameters/FilterParam'
+    SortParam:
+      $ref: './schemas/common.yml#/parameters/SortParam'
+    ProjectionParam:
+      $ref: './schemas/common.yml#/parameters/ProjectionParam'
+
+  schemas:
+    # 引入用戶相關 Schema
+    # User:
+    #   $ref: './schemas/user.yml#/User'
+    Creator:
+      $ref: './schemas/user.yml#/Creator'
+    # LoginRequest:
+    #   $ref: './schemas/auth.yml#/LoginRequest'
+    # LoginResponse:
+    #   $ref: './schemas/auth.yml#/LoginResponse'
+
+    # 引入公告相關 Schema
+    NoticeBoard:
+      $ref: './schemas/noticeBoard.yml#/NoticeBoard'
+    NoticeBoardRequest:
+      $ref: './schemas/noticeBoard.yml#/NoticeBoardRequest'
+
+    # 引入通用響應
+    SuccessResponse:
+      $ref: './schemas/common.yml#/responses/SuccessResponse'
+    '400ErrorResponse':
+      $ref: './schemas/common.yml#/responses/400ErrorResponse'
+    '401ErrorResponse':
+      $ref: './schemas/common.yml#/responses/401ErrorResponse'
+    '403ErrorResponse':
+      $ref: './schemas/common.yml#/responses/403ErrorResponse'
+    '500ErrorResponse':
+      $ref: './schemas/common.yml#/responses/500ErrorResponse'
+
+# API 路徑
+paths:
+  # 認證相關 API
+  # /auth/login:
+  #   $ref: './schemas/auth-paths.yml#/login'
+  # /auth/logout:
+  #   $ref: './schemas/auth-paths.yml#/logout'
+  # /auth/refresh:
+  #   $ref: './schemas/auth-paths.yml#/refresh'
+  # /auth/me:
+  #   $ref: './schemas/auth-paths.yml#/me'
+
+  # 管理員相關 API
+  /admin/noticeBoards:
+    $ref: './schemas/admin-paths.yml#/noticeBoards'
+  # /admin/noticeBoards/{id}:
+  #   $ref: './schemas/admin-paths.yml#/noticeBoardsById'
+
+# API 標籤
+tags:
+  # - name: "認證"
+  #   description: "用戶認證相關 API"
+  - name: '公告'
+    description: '公告相關 API'
+
+  - name: '題目'
+    description: '題目相關 API'

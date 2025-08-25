@@ -1,0 +1,56 @@
+# 用戶相關 Schema
+User:
+  type: object
+  properties:
+    id:
+      type: string
+      example: "user123"
+    name:
+      type: string
+      example: "張三"
+    email:
+      type: string
+      format: email
+      example: "user@example.com"
+    permissionList:
+      type: array
+      items:
+        type: string
+      example: [ "isActivated", "allowLogin", "allowGetQuestList", "allowGetQuestData", "allowAnswerQuest"]
+      description: "先做用戶針對後台權限功能, allow[action][data] 組成, 例如 allowGetQuestList 代表可以查看題庫列表, allowCreateNoticeData 代表可以創建公告資料"
+    birthday:
+      type: integer
+      format: timestamp
+      nullable: true
+      example: 1750430295000
+    grade:
+      type: string
+      nullable: true
+      example: "國小一年級"
+      description: "用戶年級, 這邊需再定義資料欄位"
+    isActive:
+      type: boolean
+      example: true
+      description: "用戶是否被停用, 如果被停用則禁止登入"
+    createdAt:
+      type: integer
+      format: timestamp
+      example: 1750430295000
+    updatedAt:
+      type: integer
+      format: timestamp
+      example: 1750430295000
+
+Creator:
+  type: object
+  properties:
+    id:
+      type: string
+      example: "user123"
+    name:
+      type: string
+      example: "張三"
+    email:
+      type: string
+      format: email
+      example: "user@example.com"

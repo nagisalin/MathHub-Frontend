@@ -1,0 +1,61 @@
+# 公告相關 Schema
+NoticeBoard:
+  type: object
+  properties:
+    id:
+      type: string
+      example: 'notice123'
+    title:
+      type: string
+      example: '公告標題'
+    content:
+      type: string
+      example: '公告內容'
+    status:
+      type: string
+      enum: [public, draft]
+      description: '公告狀態, public 代表已發佈, draft 代表草稿'
+    pinOrder:
+      type: integer
+      example: 0
+      description: '置頂排序, 0 代表不置頂, 數字越大可以代表權重越高越上面, 如果是非置頂的公告, 需要依照 sort 所指定欄位排序'
+    creator:
+      $ref: './user.yml#/Creator'
+    scheduleAt:
+      type: integer
+      format: timestamp
+      example: 1750430295000
+      description: '預約發佈時間, 0 代表直接發佈'
+    createdAt:
+      type: integer
+      format: timestamp
+      example: 1750430295000
+    updatedAt:
+      type: integer
+      format: timestamp
+      example: 1750430295000
+
+NoticeBoardRequest:
+  type: object
+  required: [title, status]
+  properties:
+    title:
+      type: string
+      example: '公告標題'
+    content:
+      type: string
+      example: '公告內容'
+    status:
+      type: string
+      enum: [public, draft]
+      example: 'public'
+      description: '公告狀態, public 代表已發佈, draft 代表草稿'
+    pinOrder:
+      type: integer
+      example: 0
+      description: '置頂排序, 0 代表不置頂, 數字越大可以代表權重越高越上面, 如果是非置頂的公告, 需要依照 sort 所指定欄位排序'
+    scheduleAt:
+      type: integer
+      format: timestamp
+      example: 1750430295000
+      description: '預約發佈時間, 0 代表直接發佈'
