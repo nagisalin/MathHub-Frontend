@@ -82,6 +82,7 @@ responses:
         properties: {}
 
   PaginationResponse:
+    #LOOKME - response extension
     allOf:
       - $ref: './common.yml#/responses/SuccessResponse'
       - type: object
@@ -90,6 +91,28 @@ responses:
             type: integer
             example: 100
             description: 'db 總數量, 用於顯示總筆數及分頁頁碼用'
+
+  PostDataResponse:
+    type: object
+    properties:
+      creator:
+        $ref: './user.yml#/Creator'
+      createdAt:
+        type: integer
+        format: timestamp
+        example: 1750430295000
+      updatedAt:
+        type: integer
+        format: timestamp
+        example: 1750430295000
+
+  PatchDataResponse:
+    allOf:
+      - type: object
+        properties:
+          updator:
+            $ref: './user.yml#/Creator'
+      - $ref: './common.yml#/responses/PostDataResponse'
 
   '400ErrorResponse':
     type: object
@@ -131,6 +154,23 @@ responses:
       message:
         type: string
         example: 'forbidden'
+      success:
+        type: boolean
+        example: false
+        description: '顯示成功或失敗, 用來作流程判斷'
+        enum:
+          - true
+          - false
+      data:
+        type: object
+        properties: {}
+
+  '404ErrorResponse':
+    type: object
+    properties:
+      message:
+        type: string
+        example: 'data not found'
       success:
         type: boolean
         example: false

@@ -1,0 +1,93 @@
+# 題目相關 Schema
+Question:
+  allOf:
+    - type: object
+      properties:
+        id:
+          type: string
+          example: '4fcd0ed2-0000-0000-0000-283b3841e6e1'
+          description: '題目唯一識別碼'
+    - $ref: './question.yml#/QuestionRequest'
+
+    - type: object
+      properties:
+        status:
+          $ref: './question.yml#/QuestionStatus'
+
+    - $ref: './common.yml#/responses/PatchDataResponse'
+
+QuestionRequest:
+  type: object
+  required: [code, title, content, keypoints, solution, difficulty, status]
+  properties:
+    code:
+      type: string
+      example: 'a001'
+      description: '題號，如 a001（分類字首 + 編號）'
+    title:
+      type: string
+      example: '排列組合'
+      description: '題目標題'
+    content:
+      type: string
+      example: '計算從 5 個不同顏色的球中選出 3 個球的排列數'
+      description: '題目內文（支援 Markdown + LaTeX）'
+    image_url:
+      type: string
+      example: 'https://example.com/question-image.png'
+      description: '題目圖片網址（如有）'
+    keypoints:
+      type: array
+      items:
+        type: string
+      example: ['代數', '幾何']
+      description: '關鍵概念'
+    hashtags:
+      type: array
+      items:
+        type: string
+      example: ['#學測', '#排列組合']
+      description: '標籤（來源與分類）'
+    solution:
+      type: string
+      example: '使用排列公式 P(n,r) = n!/(n-r)!'
+      description: '詳解（支援 Markdown + LaTeX）'
+    difficulty:
+      type: integer
+      minimum: 1
+      maximum: 5
+      example: 3
+      description: '難度等級（1~5顆星）'
+    source:
+      type: string
+      example: '學測 109'
+      description: '出處（如學測 109、講義）'
+    status:
+      $ref: './question.yml#/DraftOrPendingStatus'
+
+QuestionAnswer:
+  type: object
+  required: [answer_type]
+  properties:
+    # 題目解答生成類型
+    answer_type:
+      type: string
+      enum: [fixed, random, custom]
+      example: 'fixed'
+      description: '題目解答生成類型, fixed 代表固定答案, random 代表由固定數組隨機生成答案, custom 代表自定義函式檢驗答案'
+    # 測資
+    testcase:
+      type: string
+      description: '測資, 用 string 解析數值或 JSON 格式, 反正內容就想辦法 parsing 處理, 這樣不管是哪種形式作答, 都可以用此欄位處理'
+
+DraftOrPendingStatus:
+  type: string
+  enum: [draft, pending]
+  example: 'draft'
+  description: '投稿時允許的狀態, draft 代表存為草稿, pending 代表確認投稿待審核'
+
+QuestionStatus:
+  allOf:
+    - $ref: './question.yml#/DraftOrPendingStatus'
+    - enum: [draft, pending, published, rejected, canceled]
+    - description: '所有題目狀態, draft 代表存為草稿, pending 代表確認投稿待審核, published 代表管理員已同意發佈, rejected 代表管理員已駁回投稿, canceled 代表由出題者撤回取消投稿'

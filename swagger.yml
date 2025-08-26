@@ -49,17 +49,33 @@ components:
     NoticeBoardRequest:
       $ref: './schemas/noticeBoard.yml#/NoticeBoardRequest'
 
+    # 引入題目相關 Schema
+    Question:
+      $ref: './schemas/question.yml#/Question'
+    QuestionRequest:
+      $ref: './schemas/question.yml#/QuestionRequest'
+    QuestionStatus:
+      $ref: './schemas/question.yml#/QuestionStatus'
+    QuestionAnswer:
+      $ref: './schemas/question.yml#/QuestionAnswer'
+
     # 引入通用響應
     SuccessResponse:
       $ref: './schemas/common.yml#/responses/SuccessResponse'
     PaginationResponse:
       $ref: './schemas/common.yml#/responses/PaginationResponse'
+    PostDataResponse:
+      $ref: './schemas/common.yml#/responses/PostDataResponse'
+    PatchDataResponse:
+      $ref: './schemas/common.yml#/responses/PatchDataResponse'
     '400ErrorResponse':
       $ref: './schemas/common.yml#/responses/400ErrorResponse'
     '401ErrorResponse':
       $ref: './schemas/common.yml#/responses/401ErrorResponse'
     '403ErrorResponse':
       $ref: './schemas/common.yml#/responses/403ErrorResponse'
+    '404ErrorResponse':
+      $ref: './schemas/common.yml#/responses/404ErrorResponse'
     '500ErrorResponse':
       $ref: './schemas/common.yml#/responses/500ErrorResponse'
 
@@ -81,13 +97,15 @@ paths:
   /questions:
     $ref: './api/questionApi.yml#/questions'
   /questions/{id}:
-    $ref: './api/questionApi.yml#/questionsById'
+    $ref: './api/questionApi.yml#/questionsByID'
+  /questions/{id}/status:
+    $ref: './api/questionApi.yml#/questionsPatchStatus'
 
   # 管理員相關 API
   /admin/noticeBoards:
     $ref: './api/noticeBoardApi.yml#/noticeBoards'
   # /admin/noticeBoards/{id}:
-  #   $ref: './api/noticeBoardApi.yml#/noticeBoardsById'
+  #   $ref: './api/noticeBoardApi.yml#/noticeBoardsByID'
 
 # API 標籤
 tags:

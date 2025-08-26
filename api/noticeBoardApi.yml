@@ -101,7 +101,7 @@ noticeBoards:
             schema:
               $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
 
-noticeBoardsById:
+noticeBoardsByID:
   get:
     tags: [公告]
     summary: '獲取指定 id 單一公告'
@@ -141,6 +141,12 @@ noticeBoardsById:
           application/json:
             schema:
               $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '404':
+        description: '公告不存在'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/404ErrorResponse'
       '500':
         description: '伺服器錯誤'
         content:
@@ -200,6 +206,12 @@ noticeBoardsById:
           application/json:
             schema:
               $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '404':
+        description: '公告不存在'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/404ErrorResponse'
       '500':
         description: '伺服器錯誤'
         content:
@@ -244,6 +256,12 @@ noticeBoardsById:
           application/json:
             schema:
               $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '404':
+        description: '公告不存在'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/404ErrorResponse'
       '500':
         description: '伺服器錯誤'
         content:

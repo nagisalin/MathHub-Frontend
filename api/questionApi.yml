@@ -1,0 +1,275 @@
+# 題目相關 API 路徑
+
+questions:
+  get:
+    tags: [題目]
+    summary: '獲取題目列表'
+    description: '獲取當前分頁所有題目列表'
+    parameters:
+      - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
+      - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
+      - $ref: '../swagger.yml#/components/parameters/LimitParam'
+      - $ref: '../swagger.yml#/components/parameters/SkipParam'
+      - $ref: '../swagger.yml#/components/parameters/FilterParam'
+      - $ref: '../swagger.yml#/components/parameters/SortParam'
+      - $ref: '../swagger.yml#/components/parameters/ProjectionParam'
+    responses:
+      '200':
+        description: '成功獲取題目列表'
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../swagger.yml#/components/schemas/PaginationResponse'
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: '成功獲取題目列表'
+                    data:
+                      type: array
+                      items:
+                        $ref: '../swagger.yml#/components/schemas/Question'
+      '400':
+        description: '請求格式錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/400ErrorResponse'
+      '401':
+        description: '未授權'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '500':
+        description: '伺服器錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
+
+  post:
+    tags: [題目]
+    summary: '投稿單一題目'
+    description: '投稿單一題目'
+    parameters:
+      - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
+      - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '../swagger.yml#/components/schemas/QuestionRequest'
+              - $ref: '../swagger.yml#/components/schemas/QuestionAnswer'
+
+    responses:
+      '200':
+        description: '成功儲存一個題目'
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../swagger.yml#/components/schemas/SuccessResponse'
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: '成功儲存一個題目'
+                    data:
+                      $ref: '../swagger.yml#/components/schemas/Question'
+      '400':
+        description: '請求格式錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/400ErrorResponse'
+      '401':
+        description: '未授權'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '500':
+        description: '伺服器錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
+
+questionsByID:
+  get:
+    tags: [題目]
+    summary: '獲取指定 id 單一題目'
+    description: '獲取指定 id 單一題目'
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
+      - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
+    responses:
+      '200':
+        description: '成功獲取指定 id 單一題目'
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../swagger.yml#/components/schemas/SuccessResponse'
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: '成功獲取指定 id 單一題目'
+                    data:
+                      $ref: '../swagger.yml#/components/schemas/Question'
+      '400':
+        description: '請求格式錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/400ErrorResponse'
+      '401':
+        description: '未授權'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '404':
+        description: '題目不存在'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/404ErrorResponse'
+      '500':
+        description: '伺服器錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
+
+  patch:
+    tags: [題目]
+    summary: '更新指定 id 單一題目'
+    description: '更新指定 id 單一題目'
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
+      - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '../swagger.yml#/components/schemas/QuestionRequest'
+              - $ref: '../swagger.yml#/components/schemas/QuestionAnswer'
+    responses:
+      '200':
+        description: '成功更新指定 id 單一題目'
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../swagger.yml#/components/schemas/SuccessResponse'
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: '成功更新指定 id 單一題目'
+                    data:
+                      $ref: '../swagger.yml#/components/schemas/Question'
+      '400':
+        description: '請求格式錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/400ErrorResponse'
+      '401':
+        description: '未授權'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '404':
+        description: '題目不存在'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/404ErrorResponse'
+      '500':
+        description: '伺服器錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
+
+questionsPatchStatus:
+  patch:
+    tags: [題目]
+    summary: '更新指定 id 投稿題目狀態'
+    description: '更新指定 id 投稿題目狀態'
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
+      - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: '../swagger.yml#/components/schemas/QuestionStatus'
+    responses:
+      '200':
+        description: '成功更新指定 id 投稿題目狀態'
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../swagger.yml#/components/schemas/SuccessResponse'
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: '成功更新指定 id 投稿題目狀態'
+                    data:
+                      $ref: '../swagger.yml#/components/schemas/Question'
+      '400':
+        description: '請求格式錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/400ErrorResponse'
+      '401':
+        description: '未授權'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
+      '404':
+        description: '題目不存在'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/404ErrorResponse'
+      '500':
+        description: '伺服器錯誤'
+        content:
+          application/json:
+            schema:
+              $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
