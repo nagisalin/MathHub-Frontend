@@ -30,14 +30,18 @@ components:
 
   schemas:
     # 引入用戶相關 Schema
-    # User:
-    #   $ref: './schemas/user.yml#/User'
+    User:
+      $ref: './schemas/user.yml#/User'
     Creator:
       $ref: './schemas/user.yml#/Creator'
-    # LoginRequest:
-    #   $ref: './schemas/auth.yml#/LoginRequest'
-    # LoginResponse:
-    #   $ref: './schemas/auth.yml#/LoginResponse'
+    LoginRequest:
+      $ref: './schemas/auth.yml#/LoginRequest'
+    LoginResponse:
+      $ref: './schemas/auth.yml#/LoginResponse'
+    RegisterRequest:
+      $ref: './schemas/auth.yml#/RegisterRequest'
+    RefreshTokenResponse:
+      $ref: './schemas/auth.yml#/RefreshTokenResponse'
 
     # 引入公告相關 Schema
     NoticeBoard:
@@ -48,6 +52,8 @@ components:
     # 引入通用響應
     SuccessResponse:
       $ref: './schemas/common.yml#/responses/SuccessResponse'
+    PaginationResponse:
+      $ref: './schemas/common.yml#/responses/PaginationResponse'
     '400ErrorResponse':
       $ref: './schemas/common.yml#/responses/400ErrorResponse'
     '401ErrorResponse':
@@ -60,20 +66,28 @@ components:
 # API 路徑
 paths:
   # 認證相關 API
-  # /auth/login:
-  #   $ref: './schemas/auth-paths.yml#/login'
+  /auth/login:
+    $ref: './api/authApi.yml#/login'
   # /auth/logout:
-  #   $ref: './schemas/auth-paths.yml#/logout'
+  #   $ref: './api/authApi.yml#/logout'
   # /auth/refresh:
-  #   $ref: './schemas/auth-paths.yml#/refresh'
+  #   $ref: './api/authApi.yml#/refresh'
+  /auth/register:
+    $ref: './api/authApi.yml#/register'
   # /auth/me:
-  #   $ref: './schemas/auth-paths.yml#/me'
+  #   $ref: './api/authApi.yml#/me'
+
+  # 題目相關 API
+  /questions:
+    $ref: './api/questionApi.yml#/questions'
+  /questions/{id}:
+    $ref: './api/questionApi.yml#/questionsById'
 
   # 管理員相關 API
   /admin/noticeBoards:
-    $ref: './schemas/admin-paths.yml#/noticeBoards'
+    $ref: './api/noticeBoardApi.yml#/noticeBoards'
   # /admin/noticeBoards/{id}:
-  #   $ref: './schemas/admin-paths.yml#/noticeBoardsById'
+  #   $ref: './api/noticeBoardApi.yml#/noticeBoardsById'
 
 # API 標籤
 tags:

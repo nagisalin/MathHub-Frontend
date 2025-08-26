@@ -6,17 +6,13 @@ LoginRequest:
     email:
       type: string
       format: email
-      example: "user@example.com"
+      example: 'user@example.com'
     password:
       type: string
-      example: "password123"
+      example: 'password123'
     deviceID:
       type: string
-      example: "4fcd0ed2-0000-0000-0000-283b3841e6ea"
-    nonce:
-      type: string
-      example: "1234567890"
-      nullable: true
+      example: '4fcd0ed2-0000-0000-0000-283b3841e6ea'
 
 LoginResponse:
   type: object
@@ -25,16 +21,42 @@ LoginResponse:
       type: boolean
       example: true
     data:
-      type: object
-      properties:
-        accessToken:
-          type: string
-          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-        idToken:
-          type: string
-          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-        expiresIn:
-          type: integer
-          example: 3600
-        user:
-          $ref: '../swagger.yml#/components/schemas/User'
+      allOf:
+        - $ref: '../swagger.yml#/components/schemas/RefreshTokenResponse'
+        - type: object
+          properties:
+            user:
+              $ref: '../swagger.yml#/components/schemas/User'
+
+RegisterRequest:
+  type: object
+  required: [email, password, username]
+  properties:
+    email:
+      type: string
+      format: email
+      description: '輸入註冊用戶的電郵地址'
+      example: 'user@example.com'
+    password:
+      type: string
+      description: '輸入註冊用戶的密碼，密碼規則為 8 位以上，至少包含大寫、小寫字母、數字'
+      pattern: /^(?=.*[A-Z])(?=.*[!"#$%&'()*+,-./:;<=>?@^_{|}~])[a-zA-Z0-9!"#$%&'()*+,-./:;<=>?@^_{|}~]{8,64}$/
+      example: 'Password123!'
+    username:
+      type: string
+      description: '輸入註冊用戶的用戶名稱'
+      example: 'user123'
+
+RefreshTokenResponse:
+  type: object
+  properties:
+    accessToken:
+      type: string
+      example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+    idToken:
+      type: string
+      example: 'bffabc20-828f-11f0-950dc510-c3f3-4cb'
+    expiresIn:
+      type: integer
+      description: 'access token 有效期間，單位為 ms'
+      example: 3600000

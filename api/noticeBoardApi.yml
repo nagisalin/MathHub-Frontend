@@ -20,7 +20,7 @@ noticeBoards:
           application/json:
             schema:
               allOf:
-                - $ref: '../swagger.yml#/components/schemas/SuccessResponse'
+                - $ref: '../swagger.yml#/components/schemas/PaginationResponse'
                 - type: object
                   properties:
                     message:

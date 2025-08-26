@@ -80,10 +80,16 @@ responses:
       data:
         type: object
         properties: {}
-      totalNum:
-        type: integer
-        example: 100
-        description: 'db 總數量, 用於顯示總筆數及分頁頁碼用'
+
+  PaginationResponse:
+    allOf:
+      - $ref: './common.yml#/responses/SuccessResponse'
+      - type: object
+        properties:
+          totalNum:
+            type: integer
+            example: 100
+            description: 'db 總數量, 用於顯示總筆數及分頁頁碼用'
 
   '400ErrorResponse':
     type: object
