@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: 'MathHub API'
   description: 'MathHub 後端 API 規格文件'
-  version: '1.0.1  20250825'
+  version: '1.0.1 20250827'
   contact:
     name: 'MathHub'
 
