@@ -18,6 +18,14 @@ parameters:
       default: bearer ${access token}
     description: 'access_token 由 IdToken 而來'
 
+  IDParam:
+    name: id
+    in: path
+    required: true
+    schema:
+      type: string
+    description: '指定 id 單一資料'
+
   LimitParam:
     name: limit
     in: query
@@ -62,6 +70,15 @@ parameters:
       type: string
       default: "{ 'title': 1, 'createdAt': 1 }"
     description: '資料投影處理, 由 { key: value } 組成, value 為 1 代表查詢, 0 代表不查詢, 不能混合 1 和 0 的設定'
+
+# 通用參數
+schemas:
+  ID:
+    type: object
+    properties:
+      id:
+        type: string
+        example: '4fcd0ed2-0000-0000-0000-283b3841e6e1'
 
 # 通用響應
 responses:

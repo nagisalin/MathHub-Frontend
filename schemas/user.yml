@@ -1,56 +1,97 @@
 # 用戶相關 Schema
 User:
+  allOf:
+    - $ref: './user.yml#/Creator'
+
+    - type: object
+      properties:
+        role:
+          $ref: './user.yml#/Role'
+        permissionList:
+          type: array
+          items:
+            type: string
+          example: ['isActivated', 'allowLogin', 'allowGetQuestList', 'allowGetQuestData', 'allowAnswerQuest']
+          description: '先做用戶針對後台權限功能, allow[action][data] 組成, 例如 allowGetQuestList 代表可以查看題庫列表, allowCreateNoticeData 代表可以創建公告資料'
+        birthday:
+          type: integer
+          format: timestamp
+          nullable: true
+          example: 1750430295000
+        grade:
+          type: string
+          nullable: true
+          example: '國小一年級'
+          description: '用戶年級, 這邊需再定義資料欄位'
+        isActive:
+          $ref: './user.yml#/IsActive'
+
+    - $ref: './common.yml#/responses/PostDataResponse'
+
+UserRequest:
+  allOf:
+    - $ref: './auth.yml#/RegisterRequest'
+    - type: object
+      required: [role]
+      properties:
+        role:
+          $ref: './user.yml#/Role'
+
+UserUpdate:
   type: object
+  required: [username, role]
   properties:
-    id:
-      type: string
-      example: "user123"
-    name:
-      type: string
-      example: "張三"
-    email:
-      type: string
-      format: email
-      example: "user@example.com"
-    permissionList:
-      type: array
-      items:
-        type: string
-      example: [ "isActivated", "allowLogin", "allowGetQuestList", "allowGetQuestData", "allowAnswerQuest"]
-      description: "先做用戶針對後台權限功能, allow[action][data] 組成, 例如 allowGetQuestList 代表可以查看題庫列表, allowCreateNoticeData 代表可以創建公告資料"
-    birthday:
-      type: integer
-      format: timestamp
-      nullable: true
-      example: 1750430295000
-    grade:
-      type: string
-      nullable: true
-      example: "國小一年級"
-      description: "用戶年級, 這邊需再定義資料欄位"
+    username:
+      allOf:
+        - $ref: './user.yml#/UserName'
+        - description: '用戶名稱'
+    role:
+      $ref: './user.yml#/Role'
     isActive:
-      type: boolean
-      example: true
-      description: "用戶是否被停用, 如果被停用則禁止登入"
-    createdAt:
-      type: integer
-      format: timestamp
-      example: 1750430295000
-    updatedAt:
-      type: integer
-      format: timestamp
-      example: 1750430295000
+      $ref: './user.yml#/IsActive'
 
 Creator:
-  type: object
-  properties:
-    id:
-      type: string
-      example: "user123"
-    name:
-      type: string
-      example: "張三"
-    email:
-      type: string
-      format: email
-      example: "user@example.com"
+  allOf:
+    - $ref: './common.yml#/schemas/ID'
+    - type: object
+      properties:
+        username:
+          allOf:
+            - $ref: './user.yml#/UserName'
+            - description: '用戶名稱'
+
+    - type: object
+      properties:
+        email:
+          allOf:
+            - $ref: './user.yml#/Email'
+            - description: '用戶電郵地址'
+
+Email:
+  type: string
+  format: email
+  description: '輸入註冊用戶的電郵地址'
+  example: 'user@example.com'
+
+Password:
+  type: string
+  description: '輸入註冊用戶的密碼，密碼規則為 8 位以上，至少包含大寫、小寫字母、數字'
+  pattern: /^(?=.*[A-Z])(?=.*[!"#$%&'()*+,-./:;<=>?@^_{|}~])[a-zA-Z0-9!"#$%&'()*+,-./:;<=>?@^_{|}~]{8,64}$/
+  example: 'Password123!'
+
+UserName:
+  type: string
+  description: '輸入註冊用戶的用戶名稱'
+  example: 'user123'
+
+Role:
+  type: array
+  items:
+    type: string
+  example: ['admin', 'teacher']
+  description: '用戶角色群組, 會根據 db 的 role collection 指派給此用戶帳號, 並根據多重角色決定 permissionList'
+
+IsActive:
+  type: boolean
+  example: true
+  description: '用戶是否被停用, 如果被停用則禁止登入'

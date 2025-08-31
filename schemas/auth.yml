@@ -4,15 +4,17 @@ LoginRequest:
   required: [email, password, deviceID]
   properties:
     email:
-      type: string
-      format: email
-      example: 'user@example.com'
+      allOf:
+        - $ref: './user.yml#/Email'
+        - description: '用戶電郵地址'
     password:
-      type: string
-      example: 'password123'
+      allOf:
+        - $ref: './user.yml#/Password'
+        - description: '用戶密碼'
     deviceID:
       type: string
       example: '4fcd0ed2-0000-0000-0000-283b3841e6ea'
+      description: '用戶設備ID'
 
 LoginResponse:
   type: object
@@ -33,19 +35,11 @@ RegisterRequest:
   required: [email, password, username]
   properties:
     email:
-      type: string
-      format: email
-      description: '輸入註冊用戶的電郵地址'
-      example: 'user@example.com'
+      $ref: './user.yml#/Email'
     password:
-      type: string
-      description: '輸入註冊用戶的密碼，密碼規則為 8 位以上，至少包含大寫、小寫字母、數字'
-      pattern: /^(?=.*[A-Z])(?=.*[!"#$%&'()*+,-./:;<=>?@^_{|}~])[a-zA-Z0-9!"#$%&'()*+,-./:;<=>?@^_{|}~]{8,64}$/
-      example: 'Password123!'
+      $ref: './user.yml#/Password'
     username:
-      type: string
-      description: '輸入註冊用戶的用戶名稱'
-      example: 'user123'
+      $ref: './user.yml#/UserName'
 
 RefreshTokenResponse:
   type: object

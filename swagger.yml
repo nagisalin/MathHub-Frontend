@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: 'MathHub API'
   description: 'MathHub 後端 API 規格文件'
-  version: '1.0.1 20250827'
+  version: '1.0.2 20250831'
   contact:
     name: 'MathHub'
 
@@ -17,6 +17,8 @@ components:
       $ref: './schemas/common.yml#/parameters/ContentTypeHeader'
     AuthorizationHeader:
       $ref: './schemas/common.yml#/parameters/AuthorizationHeader'
+    IDParam:
+      $ref: './schemas/common.yml#/parameters/IDParam'
     LimitParam:
       $ref: './schemas/common.yml#/parameters/LimitParam'
     SkipParam:
@@ -29,6 +31,10 @@ components:
       $ref: './schemas/common.yml#/parameters/ProjectionParam'
 
   schemas:
+    # 引入通用參數
+    ID:
+      $ref: './schemas/common.yml#/schemas/ID'
+
     # 引入用戶相關 Schema
     User:
       $ref: './schemas/user.yml#/User'
@@ -42,6 +48,12 @@ components:
       $ref: './schemas/auth.yml#/RegisterRequest'
     RefreshTokenResponse:
       $ref: './schemas/auth.yml#/RefreshTokenResponse'
+
+    # 引入用戶相關 Schema
+    UserRequest:
+      $ref: './schemas/user.yml#/UserRequest'
+    UserUpdate:
+      $ref: './schemas/user.yml#/UserUpdate'
 
     # 引入公告相關 Schema
     NoticeBoard:
@@ -102,6 +114,11 @@ paths:
     $ref: './api/questionApi.yml#/questionsPatchStatus'
 
   # 管理員相關 API
+  /admin/users:
+    $ref: './api/userApi.yml#/users'
+  /admin/users/{id}:
+    $ref: './api/userApi.yml#/usersByID'
+
   /admin/noticeBoards:
     $ref: './api/noticeBoardApi.yml#/noticeBoards'
   # /admin/noticeBoards/{id}:
@@ -113,6 +130,9 @@ tags:
   #   description: "用戶認證相關 API"
   - name: '公告'
     description: '公告相關 API'
+
+  - name: '用戶'
+    description: '用戶相關 API'
 
   - name: '題目'
     description: '題目相關 API'

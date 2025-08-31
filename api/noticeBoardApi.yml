@@ -54,11 +54,6 @@ noticeBoards:
     summary: '新增單一公告'
     description: '新增單一公告'
     parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
       - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
       - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
     requestBody:
@@ -107,13 +102,9 @@ noticeBoardsByID:
     summary: '獲取指定 id 單一公告'
     description: '獲取指定 id 單一公告'
     parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
       - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
       - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
+      - $ref: '../swagger.yml#/components/parameters/IDParam'
     responses:
       '200':
         description: '成功獲取指定 id 單一公告'
@@ -159,13 +150,9 @@ noticeBoardsByID:
     summary: '更新指定 id 單一公告'
     description: '更新指定 id 單一公告'
     parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
       - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
       - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
+      - $ref: '../swagger.yml#/components/parameters/IDParam'
     requestBody:
       required: true
       content:
@@ -224,13 +211,9 @@ noticeBoardsByID:
     summary: '刪除指定 id 單一公告'
     description: '刪除指定 id 單一公告'
     parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
       - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
       - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
+      - $ref: '../swagger.yml#/components/parameters/IDParam'
     responses:
       '200':
         description: '成功刪除指定 id 單一公告'

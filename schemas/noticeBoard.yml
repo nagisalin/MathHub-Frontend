@@ -1,11 +1,7 @@
 # 公告相關 Schema
 NoticeBoard:
   allOf:
-    - type: object
-      properties:
-        id:
-          type: string
-          example: '4fcd0ed2-0000-0000-0000-283b3841e6e1'
+    - $ref: './common.yml#/schemas/ID'
     - $ref: './noticeBoard.yml#/NoticeBoardRequest'
     - $ref: './common.yml#/responses/PostDataResponse'
 

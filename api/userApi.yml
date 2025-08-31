@@ -1,10 +1,8 @@
-# 題目相關 API 路徑
-
-questions:
+users:
   get:
-    tags: [題目]
-    summary: '獲取題目列表'
-    description: '獲取當前分頁所有題目列表'
+    tags: [用戶]
+    summary: '獲取用戶列表'
+    description: '獲取當前分頁所有用戶列表'
     parameters:
       - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
       - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
@@ -15,7 +13,7 @@ questions:
       - $ref: '../swagger.yml#/components/parameters/ProjectionParam'
     responses:
       '200':
-        description: '成功獲取題目列表'
+        description: '成功獲取用戶列表'
         content:
           application/json:
             schema:
@@ -25,11 +23,11 @@ questions:
                   properties:
                     message:
                       type: string
-                      example: '成功獲取題目列表'
+                      example: '成功獲取用戶列表'
                     data:
                       type: array
                       items:
-                        $ref: '../swagger.yml#/components/schemas/Question'
+                        $ref: '../swagger.yml#/components/schemas/User'
       '400':
         description: '請求格式錯誤'
         content:
@@ -50,9 +48,9 @@ questions:
               $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
 
   post:
-    tags: [題目]
-    summary: '投稿單一題目'
-    description: '投稿單一題目'
+    tags: [用戶]
+    summary: '新增單一用戶'
+    description: '新增單一用戶'
     parameters:
       - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
       - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
@@ -62,12 +60,11 @@ questions:
         application/json:
           schema:
             allOf:
-              - $ref: '../swagger.yml#/components/schemas/QuestionRequest'
-              - $ref: '../swagger.yml#/components/schemas/QuestionAnswer'
+              - $ref: '../swagger.yml#/components/schemas/UserRequest'
 
     responses:
       '200':
-        description: '成功儲存一個題目'
+        description: '成功新增一個用戶'
         content:
           application/json:
             schema:
@@ -77,9 +74,9 @@ questions:
                   properties:
                     message:
                       type: string
-                      example: '成功儲存一個題目'
+                      example: '成功新增一個用戶'
                     data:
-                      $ref: '../swagger.yml#/components/schemas/Question'
+                      $ref: '../swagger.yml#/components/schemas/User'
       '400':
         description: '請求格式錯誤'
         content:
@@ -99,18 +96,18 @@ questions:
             schema:
               $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
 
-questionsByID:
+usersByID:
   get:
-    tags: [題目]
-    summary: '獲取指定 id 單一題目'
-    description: '獲取指定 id 單一題目'
+    tags: [用戶]
+    summary: '獲取指定 id 單一用戶'
+    description: '獲取指定 id 單一用戶'
     parameters:
       - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
       - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
       - $ref: '../swagger.yml#/components/parameters/IDParam'
     responses:
       '200':
-        description: '成功獲取指定 id 單一題目'
+        description: '成功獲取指定 id 單一用戶'
         content:
           application/json:
             schema:
@@ -120,9 +117,9 @@ questionsByID:
                   properties:
                     message:
                       type: string
-                      example: '成功獲取指定 id 單一題目'
+                      example: '成功獲取指定 id 單一用戶'
                     data:
-                      $ref: '../swagger.yml#/components/schemas/Question'
+                      $ref: '../swagger.yml#/components/schemas/User'
       '400':
         description: '請求格式錯誤'
         content:
@@ -136,7 +133,7 @@ questionsByID:
             schema:
               $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
       '404':
-        description: '題目不存在'
+        description: '用戶不存在'
         content:
           application/json:
             schema:
@@ -149,9 +146,9 @@ questionsByID:
               $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
 
   patch:
-    tags: [題目]
-    summary: '更新指定 id 單一題目'
-    description: '更新指定 id 單一題目'
+    tags: [用戶]
+    summary: '更新指定 id 單一用戶'
+    description: '更新指定 id 單一用戶'
     parameters:
       - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
       - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
@@ -162,11 +159,10 @@ questionsByID:
         application/json:
           schema:
             allOf:
-              - $ref: '../swagger.yml#/components/schemas/QuestionRequest'
-              - $ref: '../swagger.yml#/components/schemas/QuestionAnswer'
+              - $ref: '../swagger.yml#/components/schemas/UserUpdate'
     responses:
       '200':
-        description: '成功更新指定 id 單一題目'
+        description: '成功更新指定 id 單一用戶'
         content:
           application/json:
             schema:
@@ -176,9 +172,9 @@ questionsByID:
                   properties:
                     message:
                       type: string
-                      example: '成功更新指定 id 單一題目'
+                      example: '成功更新指定 id 單一用戶'
                     data:
-                      $ref: '../swagger.yml#/components/schemas/Question'
+                      $ref: '../swagger.yml#/components/schemas/User'
       '400':
         description: '請求格式錯誤'
         content:
@@ -192,7 +188,7 @@ questionsByID:
             schema:
               $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
       '404':
-        description: '題目不存在'
+        description: '用戶不存在'
         content:
           application/json:
             schema:
@@ -204,27 +200,17 @@ questionsByID:
             schema:
               $ref: '../swagger.yml#/components/schemas/500ErrorResponse'
 
-questionsPatchStatus:
-  patch:
-    tags: [題目]
-    summary: '更新指定 id 投稿題目狀態'
-    description: '更新指定 id 投稿題目狀態'
+  delete:
+    tags: [用戶]
+    summary: '刪除指定 id 單一用戶'
+    description: '刪除指定 id 單一用戶'
     parameters:
       - $ref: '../swagger.yml#/components/parameters/ContentTypeHeader'
       - $ref: '../swagger.yml#/components/parameters/AuthorizationHeader'
       - $ref: '../swagger.yml#/components/parameters/IDParam'
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                $ref: '../swagger.yml#/components/schemas/QuestionStatus'
     responses:
       '200':
-        description: '成功更新指定 id 投稿題目狀態'
+        description: '成功刪除指定 id 單一用戶'
         content:
           application/json:
             schema:
@@ -234,9 +220,7 @@ questionsPatchStatus:
                   properties:
                     message:
                       type: string
-                      example: '成功更新指定 id 投稿題目狀態'
-                    data:
-                      $ref: '../swagger.yml#/components/schemas/Question'
+                      example: '成功刪除指定 id 單一用戶'
       '400':
         description: '請求格式錯誤'
         content:
@@ -250,7 +234,7 @@ questionsPatchStatus:
             schema:
               $ref: '../swagger.yml#/components/schemas/401ErrorResponse'
       '404':
-        description: '題目不存在'
+        description: '用戶不存在'
         content:
           application/json:
             schema:
